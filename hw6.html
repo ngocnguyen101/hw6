@@ -175,6 +175,21 @@ pre code {
 <blockquote>
 <p>__Question__1: Data cleaning: the values “IAP”, “DK” and “NA” all encode missing values. Replace all of these instances by the value NA.</p>
 </blockquote>
+<pre class="r"><code>head(happy)</code></pre>
+<pre><code>##           HAPPY YEAR AGE    SEX       MARITAL         DEGREE       FINRELA
+## 1 NOT TOO HAPPY 1972  23 FEMALE NEVER MARRIED       BACHELOR       AVERAGE
+## 2 NOT TOO HAPPY 1972  70   MALE       MARRIED LT HIGH SCHOOL ABOVE AVERAGE
+## 3  PRETTY HAPPY 1972  48 FEMALE       MARRIED    HIGH SCHOOL       AVERAGE
+## 4 NOT TOO HAPPY 1972  27 FEMALE       MARRIED       BACHELOR       AVERAGE
+## 5  PRETTY HAPPY 1972  61 FEMALE       MARRIED    HIGH SCHOOL ABOVE AVERAGE
+## 6  PRETTY HAPPY 1972  26   MALE NEVER MARRIED    HIGH SCHOOL ABOVE AVERAGE
+##      HEALTH WTSSALL          PARTYID POLVIEWS
+## 1      GOOD  0.4446     IND,NEAR DEM      IAP
+## 2      FAIR  0.8893 NOT STR DEMOCRAT      IAP
+## 3 EXCELLENT  0.8893      INDEPENDENT      IAP
+## 4      GOOD  0.8893 NOT STR DEMOCRAT      IAP
+## 5      GOOD  0.8893  STRONG DEMOCRAT      IAP
+## 6      GOOD  0.4446     IND,NEAR DEM      IAP</code></pre>
 <pre class="r"><code>happy[happy == &quot;IAP&quot;] = NA
 happy[happy == &quot;NA&quot;] = NA
 happy[happy == &quot;DK&quot;] = NA</code></pre>
@@ -239,6 +254,9 @@ happy = happy %&gt;% mutate(
 ) %&gt;% select(-SEX, -MARITAL)
 
 saveRDS(happy,&quot;happy.rds&quot;)</code></pre>
+<blockquote>
+<p><strong>Own Question</strong>: Relationsihp between happiness with finance and sex.</p>
+</blockquote>
 
 
 

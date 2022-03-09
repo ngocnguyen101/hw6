@@ -22,6 +22,7 @@ happy <- readRDS("data/HAPPY.rds")
 > __Question__1: Data cleaning: the values “IAP”, “DK” and “NA” all encode missing values. Replace all of these instances by the value NA.
 
 ```{r}
+head(happy)
 happy[happy == "IAP"] = NA
 happy[happy == "NA"] = NA
 happy[happy == "DK"] = NA
@@ -90,7 +91,5 @@ saveRDS(happy,"happy.rds")
 
 ```
 
-
-
-
+> __Own Question__:  Relationsihp between happiness with finance and sex.
 
