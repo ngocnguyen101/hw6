@@ -4,28 +4,93 @@ author: "Ngoc Nguyen"
 date: "3/08/2022"
 output: html_document
 ---
-Link to the [Github Project](https://github.com/ArgentCode/DS202-HW6.git "Github Project")
+Link to the [Github Project](https://github.com/ngocnguyen101/hw6.git "Github Project")
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-#Instaniate stuff
+```{r load-packages, include=FALSE}
 library(tidyverse)
 library(ggmosaic)
 library(reshape2)
+data(happy,package ="productplots")
 happy <- readRDS("data/HAPPY.rds")
 ```
->__Question__1: Data cleaning: the values “IAP”, “DK” and “NA” all encode missing values. Replace all of these instances by the value NA.
+
+> __Question__1: Data cleaning: the values “IAP”, “DK” and “NA” all encode missing values. Replace all of these instances by the value NA.
 
 ```{r}
-# another option
-#happy[happy == "IAP"] = NA
-#happy[happy == "NA"] = NA
-#happy[happy == "DK"] = NA
-happy = replace(happy, happy =="IAP", NA)
-happy = replace(happy, happy =="NA", NA)
-happy = replace(happy, happy =="DK", NA)
+happy[happy == "IAP"] = NA
+happy[happy == "NA"] = NA
+happy[happy == "DK"] = NA
 ```
+> __Question__2,3: Check the type of the variable and cast into the right type (factor variable for categorical variables). For age, change “89 OR OLDER” to 89 and assume the variable should be numeric. Bring all levels of factors into a sensible order. For marital you could e.g. order the levels according to average age.
+
+```{r}
+happy <- happy %>% mutate(
+  degree = factor(tolower(DEGREE)),
+  degree = factor(degree, levels=c("lt high school",
+                                   "high school",
+                                   "junior college",
+                                   "bachelor",
+                                   "graduate school"))
+) %>% select(-DEGREE)
+
+happy = happy %>% mutate(happiness = factor(tolower(HAPPY))
+) %>% select(-HAPPY)
+
+happy = happy %>% mutate(
+  finrela= factor(tolower(FINRELA)),
+  finrela = factor(finrela, levels=c("far below average",
+                                     "below average",
+                                     "average",
+                                     "above average",
+                                     "far above average"))
+)%>% select(-FINRELA)
+
+happy = happy %>% mutate(
+  health = factor(tolower(HEALTH)),
+  health = factor(health, levels=c("poor",
+                                   "fair",
+                                   "good",
+                                   "excellent"))
+)%>% select(-HEALTH)
+
+happy = happy %>% mutate(
+  partyid = factor(tolower(PARTYID)),
+  partyid = factor(partyid, levels=c("strong democrat",
+                                    "not str democrat",
+                                    "ind,near dem",
+                                    "independent",
+                                    "ind,near rep",
+                                    "not str republican",
+                                    "strong republican",
+                                    "other party"))
+)  %>% select(-PARTYID)
+
+happy = happy %>% mutate(
+  polviews = factor(tolower(POLVIEWS)),
+  polviews = factor(polviews, levels=c("extremely liberal",
+                                      "liberal",
+                                      "slightly liberal",
+                                      "moderate",
+                                      "slghtly conservative",
+                                      "conservative",
+                                      "extrmly conservative"))
+)  %>% select(-POLVIEWS)
+
+happy = happy %>% mutate(
+  marital = factor(tolower(MARITAL)),
+  sex = factor(tolower(SEX))
+) %>% select(-SEX, -MARITAL)
+
+saveRDS(happy,"happy.rds")
+
+```
+
+
+
+
+
